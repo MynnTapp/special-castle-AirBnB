@@ -12,9 +12,12 @@ export async function csrfFetch(url, options = {}) {
 
   const res = await window.fetch(url, options);
 
-  if (res.status >= 400) throw res;
-
-  return res;
+  if (res.ok) {
+    const data = await res.json();
+    return data;
+  }
+  const errors = await res.json();
+  return errors;
 }
 
 export function restoreCSRF() {

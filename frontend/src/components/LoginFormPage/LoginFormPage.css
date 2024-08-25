@@ -1,0 +1,11 @@
+body {
+  background-color: #ccc;
+}
+
+#root {
+  text-align: center;
+}
+
+.errors.message {
+  color: red;
+}

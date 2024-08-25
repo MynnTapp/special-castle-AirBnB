@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { Provider } from "react-redux";
 import "./index.css";
-import configureStore from "./store/store";
+import configureStore from "./store";
 import { restoreCSRF } from "./store/csrf";
 
 const store = configureStore();
