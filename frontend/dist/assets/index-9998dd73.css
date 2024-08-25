@@ -1,0 +1,1 @@
+#modal{position:fixed;top:0;right:0;bottom:0;left:0;display:flex;justify-content:center;align-items:center}#modal-background{position:absolute;top:0;right:0;bottom:0;left:0;background-color:#000000b3}#modal-content{position:absolute;background-color:#fff}body{background-color:#ccc}#root{text-align:center}.errors.message{color:red}.hidden{display:none}
