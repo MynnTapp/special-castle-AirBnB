@@ -7,12 +7,17 @@ export default function Navigation({ isLoaded }) {
    const sessionUser = useSelector((state) => state.session.user);
 
    return (
-      <ul>
+      <ul className="nav-box">
          <li>
-            <NavLink to="/">Home</NavLink>
+            <NavLink to="/">
+               <h1 className="logo">SpookBnB</h1>
+            </NavLink>
          </li>
          {isLoaded && (
             <li>
+               {sessionUser ? (
+                  <NavLink to="/spots/new">Create a New Spot</NavLink>
+               ) : null}
                <ProfileButton user={sessionUser} />
             </li>
          )}

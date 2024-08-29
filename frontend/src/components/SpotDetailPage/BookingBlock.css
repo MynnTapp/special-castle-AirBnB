@@ -1,0 +1,23 @@
+.booking-block {
+   border: 2px solid gray;
+   border-radius: 1rem;
+   padding: 1.5rem;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-evenly;
+   margin: 2rem;
+   width: 65vw;
+}
+
+.price_reviews {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+
+.button {
+   background-color: red;
+   color: white;
+   height: 1.5rem;
+   cursor: pointer;
+}

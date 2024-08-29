@@ -15,13 +15,12 @@ const removeUser = () => {
 };
 
 export const login = (user) => async (dispatch) => {
-   const { credential, password } = user;
    const res = await csrfFetch("/api/session", {
       method: "POST",
-      body: JSON.stringify({ credential, password }),
+      body: JSON.stringify(user),
    });
 
-   if (!res.errors) {
+   if (!res.message) {
       dispatch(setUser(res.user));
       return res;
    }
@@ -29,10 +28,10 @@ export const login = (user) => async (dispatch) => {
 };
 
 export const restoreUser = () => async (dispatch) => {
-   const data = await fetch("/api/session");
-
-   const user = await data.json();
-   dispatch(setUser(user.user));
+   const data = await csrfFetch("/api/session");
+   if (!data.errors) {
+      dispatch(setUser(data.user));
+   }
 };
 
 export const signup = (user) => async (dispatch) => {

@@ -1,18 +1,26 @@
 import { useModal } from "../../context/Modal";
+import "./OpenModal.css";
 
-export default function OpenModalButton({
+export default function OpenModal({
    modalComponent,
+   itemText,
    buttonText,
+   onItemClick,
    onButtonClick,
    onModalClose,
 }) {
    const { setModalContent, setOnModalClose } = useModal();
 
-   function handleClick() {
+   const handleClick = () => {
       if (onModalClose) setOnModalClose(onModalClose);
       setModalContent(modalComponent);
       if (typeof onButtonClick === "function") onButtonClick();
-   }
+      if (typeof onItemClick === "function") onItemClick();
+   };
 
-   return <button onClick={handleClick}>{buttonText}</button>;
+   return !itemText ? (
+      <button onClick={handleClick}>{buttonText}</button>
+   ) : (
+      <li onClick={handleClick}>{itemText}</li>
+   );
 }

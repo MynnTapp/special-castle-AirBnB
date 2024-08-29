@@ -1,0 +1,24 @@
+.main-spot-content {
+   text-align: left;
+   width: fit-content;
+   display: flex;
+   flex-direction: column;
+}
+
+.preview {
+   width: 50%;
+   height: 35vh;
+}
+
+.details {
+   display: flex;
+}
+
+.divider {
+   border: 1px solid gray;
+}
+
+.the-page {
+   margin: 0rem 5rem;
+   padding: 0rem 5rem;
+}

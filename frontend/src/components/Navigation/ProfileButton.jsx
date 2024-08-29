@@ -4,11 +4,13 @@ import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import OpenModalMenuItem from "./OpenModalMenuItem";
+import OpenModal from "../OpenModal";
 import "./ProfileButton.css";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function ProfileButton({ user }) {
    const dispatch = useDispatch();
+   const navigateTo = useNavigate();
    const [showMenu, setShowMenu] = useState(false);
    const ulRef = useRef();
 
@@ -16,6 +18,7 @@ export default function ProfileButton({ user }) {
       e.preventDefault();
       dispatch(signout());
       closeMenu();
+      navigateTo("/");
    }
 
    function toggleMenu(e) {
@@ -42,29 +45,29 @@ export default function ProfileButton({ user }) {
    const ulClassname = "profile-dropdown" + (showMenu ? "" : " hidden");
    return (
       <>
-         <button onClick={toggleMenu}>
+         <button onClick={toggleMenu} style={{ cursor: "pointer" }}>
             <FaUserCircle />
          </button>
          <ul className={ulClassname} ref={ulRef}>
             {user ? (
                <>
-                  <li>{user.username}</li>
-                  <li>
-                     {user.firstName} {user.lastName}
-                  </li>
+                  <li>Hello, {user.username}</li>
                   <li>{user.email}</li>
+                  <li>
+                     <NavLink to="/spots/current">Manage Spots</NavLink>
+                  </li>
                   <li>
                      <button onClick={logout}>Log Out</button>
                   </li>
                </>
             ) : (
                <>
-                  <OpenModalMenuItem
+                  <OpenModal
                      itemText="Log In"
                      onItemClick={closeMenu}
                      modalComponent={<LoginFormModal />}
                   />
-                  <OpenModalMenuItem
+                  <OpenModal
                      itemText="Sign Up"
                      onItemClick={closeMenu}
                      modalComponent={<SignupFormModal />}

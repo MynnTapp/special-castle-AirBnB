@@ -1,23 +1,22 @@
 const express = require("express");
 const { requireAuth, checkDate } = require("../../utils/auth.js");
 const {
-  getAllSpots,
-  getOwnedSpots,
-  getASpot,
-  createASpot,
-  editASpot,
-  addSpotImage,
-  deleteASpot,
-  getSpotReviews,
-  getSpotBookings,
-  addSpotBooking,
-  addSpotReview,
-  checkBookings,
-  validateReview,
-  validateParams,
-  validateSpot,
+   getAllSpots,
+   getOwnedSpots,
+   getASpot,
+   createASpot,
+   editASpot,
+   addSpotImage,
+   deleteASpot,
+   getSpotReviews,
+   getSpotBookings,
+   addSpotBooking,
+   addSpotReview,
+   checkBookings,
+   validateReview,
+   validateParams,
+   validateSpot,
 } = require("../utils/spots-router-logic.js");
-
 const router = express.Router();
 
 // Get Owner's Spots - URL: api/spots/current
@@ -34,11 +33,11 @@ router.get("/:spotId/bookings", requireAuth, getSpotBookings);
 
 //Create a Spot Booking - URL: api/spots/:spotId/bookings
 router.post(
-  "/:spotId/bookings",
-  requireAuth,
-  checkDate,
-  checkBookings,
-  addSpotBooking
+   "/:spotId/bookings",
+   requireAuth,
+   checkDate,
+   checkBookings,
+   addSpotBooking
 );
 
 //Create a Spot Review - URL: api/spots/:spotId/reviews
@@ -50,13 +49,13 @@ router.get("/:spotId", getASpot);
 //Get all Spots - URL: api/spots
 router.get("/", validateParams, getAllSpots);
 
+//Create a Spot - URL: api/spots
+router.post("/", requireAuth, validateSpot, createASpot);
+
 //Edit a Spot - URL: api/spots/:spotId
 router.put("/:spotId", requireAuth, validateSpot, editASpot);
 
 //Delete a Spot - URL: api/spots/:spotId
 router.delete("/:spotId", requireAuth, deleteASpot);
-
-//Create a Spot - URL: api/spots
-router.post("/", requireAuth, validateSpot, createASpot);
 
 module.exports = router;
