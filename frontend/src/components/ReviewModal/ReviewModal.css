@@ -1,0 +1,11 @@
+.rating-input .filled {
+   color: cyan;
+}
+
+.rating-input .empty {
+   color: magenta;
+}
+
+.rating-input {
+   font-size: 1.4rem;
+}

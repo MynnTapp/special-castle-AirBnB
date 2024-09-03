@@ -54,7 +54,7 @@ export const removeSpot = (id) => async (dispatch) => {
    });
 
    if (!res.errors) {
-      dispatch(remove(res));
+      dispatch(remove());
    }
 };
 

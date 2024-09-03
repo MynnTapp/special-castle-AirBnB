@@ -5,19 +5,22 @@ import { useEffect } from "react";
 import { getAllSpots } from "../../store/spots";
 import { getAllReviews } from "../../store/reviews";
 import BookingBlock from "./BookingBlock";
+import Reviews from "../Reviews";
 
 export default function SpotDetailPage() {
    const dispatch = useDispatch();
    const { id } = useParams();
    const spot = useSelector((state) => state.spots[id]);
-
+   const sessionUser = useSelector((state) => state.session.user);
+   const reviews = useSelector((state) => state.reviews);
    useEffect(() => {
       dispatch(getAllSpots());
       dispatch(getAllReviews(id));
    }, [dispatch, id]);
 
-   if (!spot) return <h1>Loading...</h1>;
-
+   if (!spot || !reviews || !sessionUser) return <h1>Loading...</h1>;
+   const reviewsArr = Object.values(reviews ? reviews : []);
+   console.log(reviewsArr);
    return (
       <div className="the-page">
          <div className="main-spot-content">
@@ -47,10 +50,18 @@ export default function SpotDetailPage() {
                   <p>{spot.description}</p>
                </div>
 
-               <BookingBlock spot={spot} />
+               <BookingBlock
+                  spot={spot}
+                  reviews={reviewsArr.length ? reviewsArr : []}
+               />
             </div>
+            <div className="divider"></div>
+            <Reviews
+               spot={spot}
+               reviews={reviewsArr.length ? reviewsArr : []}
+               user={sessionUser}
+            />
          </div>
-         <div className="divider"></div>
       </div>
    );
 }

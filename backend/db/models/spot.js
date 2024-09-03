@@ -152,7 +152,7 @@ module.exports = (sequelize, DataTypes) => {
                   });
                   spot.setDataValue(
                      "numReviews",
-                     reviews ? reviews.length : null
+                     reviews.length ? reviews.length : 0
                   );
 
                   const reviewTotal = reviews.reduce(

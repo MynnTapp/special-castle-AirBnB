@@ -51,7 +51,7 @@ export default function ProfileButton({ user }) {
          <ul className={ulClassname} ref={ulRef}>
             {user ? (
                <>
-                  <li>Hello, {user.username}</li>
+                  <li>Hello, {user.firstName}</li>
                   <li>{user.email}</li>
                   <li>
                      <NavLink to="/spots/current">Manage Spots</NavLink>

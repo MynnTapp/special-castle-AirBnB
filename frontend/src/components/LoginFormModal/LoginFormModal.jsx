@@ -48,7 +48,9 @@ export default function LoginFormModal() {
             {errors.credential && (
                <p className="error-message">{errors.credential}</p>
             )}
-            <button>Log In</button>
+            <button disabled={password.length < 6 || credential.length < 4}>
+               Log In
+            </button>
          </form>
       </>
    );

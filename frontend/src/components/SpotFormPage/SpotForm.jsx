@@ -142,8 +142,6 @@ export default function SpotForm({ isNewSpot }) {
             <br />
             <input
                type="number"
-               min="-90"
-               max="90"
                value={spot ? spot.lat : lat}
                onChange={({ target: { value } }) => setLat(value)}
             />
@@ -154,8 +152,6 @@ export default function SpotForm({ isNewSpot }) {
             <br />
             <input
                type="number"
-               min="-180"
-               max="180"
                value={spot ? spot.lng : lng}
                onChange={({ target: { value } }) => setLng(value)}
             />

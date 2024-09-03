@@ -129,7 +129,6 @@ module.exports = {
    /******************************** CREATE A SPOT *******************************/
    /******************************************************************************/
    createASpot: async function (req, res, next) {
-      console.log(req);
       const userId = req.user.id;
 
       const newSpot = await Spot.create({
@@ -228,14 +227,10 @@ module.exports = {
    /******************************************************************************/
    /******************************* GET SPOT'S REVIEWS ***************************/
    /******************************************************************************/
-   getSpotReviews: async function (req, res) {
+   getSpotReviews: async function (req, res, next) {
       const spotId = parseInt(req.params.spotId);
 
-      if (isNaN(spotId))
-         return res.status(404).json({
-            message:
-               "We're sorry, the resource you are looking for does not exist :(",
-         });
+      if (isNaN(spotId)) return next();
 
       const spot = await Spot.findByPk(spotId);
 
@@ -261,14 +256,10 @@ module.exports = {
    /******************************************************************************/
    /****************************** CREATE SPOT REVIEW ****************************/
    /******************************************************************************/
-   addSpotReview: async function (req, res) {
+   addSpotReview: async function (req, res, next) {
       const spotId = parseInt(req.params.spotId);
 
-      if (isNaN(spotId))
-         return res.status(404).json({
-            message:
-               "We're sorry, the page you are looking for does not exist :(",
-         });
+      if (isNaN(spotId)) return next();
 
       const spot = await Spot.findByPk(spotId);
 
@@ -293,7 +284,10 @@ module.exports = {
          ...req.body,
       });
 
-      return res.status(201).json(newReview);
+      const whoops = newReview.toJSON();
+      whoops.User = req.user.toJSON();
+      console.log(whoops);
+      return res.status(201).json(whoops);
    },
    /******************************************************************************/
    /****************************** GET SPOT'S BOOKINGS ***************************/

@@ -22,7 +22,6 @@ const validateLogin = [
 
 // Log in  POST /api/session
 router.post("/", validateLogin, async (req, res, next) => {
-   console.log("\nare we even getting here?\n\n\n");
    const { credential, password } = req.body;
 
    const user = await User.unscoped().findOne({

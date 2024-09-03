@@ -1,13 +1,13 @@
 import "./BookingBlock.css";
 import { FaStar } from "react-icons/fa";
-export default function BookingBlock({ spot }) {
-   if (!spot) return <h1>Loading...</h1>;
+export default function BookingBlock({ spot, reviews }) {
+   console.log(reviews);
    return (
       <>
          <div className="booking-block">
             <div className="price_reviews">
                <div>$ {spot.price.toFixed(2)} night</div>
-               {spot.numReviews ? (
+               {reviews.length ? (
                   <div>
                      <FaStar />
                      {spot.avgRating} •{" "}
