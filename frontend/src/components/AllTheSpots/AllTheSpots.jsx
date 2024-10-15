@@ -64,6 +64,7 @@ export default function AllTheSpots({ isCurrent }) {
                        onClick={() => navigateTo(`/spots/${spot.id}`)}
                        alt="Image Not Found"
                     ></img>
+
                     <div className="spot-details">
                        <p className="locale-rating">
                           {spot.city}, {spot.state}

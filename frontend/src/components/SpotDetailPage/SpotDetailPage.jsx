@@ -11,14 +11,13 @@ export default function SpotDetailPage() {
    const dispatch = useDispatch();
    const { id } = useParams();
    const spot = useSelector((state) => state.spots[id]);
-   const sessionUser = useSelector((state) => state.session.user);
    const reviews = useSelector((state) => state.reviews);
    useEffect(() => {
       dispatch(getAllSpots());
       dispatch(getAllReviews(id));
    }, [dispatch, id]);
 
-   if (!spot || !reviews || !sessionUser) return <h1>Loading...</h1>;
+   if (!spot || !reviews) return <h1>Loading...</h1>;
    const reviewsArr = Object.values(reviews ? reviews : []);
    console.log(reviewsArr);
    return (
@@ -59,7 +58,6 @@ export default function SpotDetailPage() {
             <Reviews
                spot={spot}
                reviews={reviewsArr.length ? reviewsArr : []}
-               user={sessionUser}
             />
          </div>
       </div>

@@ -4,6 +4,7 @@ import DeleteReviewModal from "../ReviewModal";
 import { CreateReviewModal } from "../ReviewModal/ReviewModal";
 import OpenModal from "../OpenModal";
 import { useState } from "react";
+import { createSelector } from "reselect";
 
 const MONTHS_OF_YEAR = [
    "Jan",
@@ -20,8 +21,13 @@ const MONTHS_OF_YEAR = [
    "Dec",
 ];
 
-export default function Reviews({ spot, reviews, user }) {
+export default function Reviews({ spot, reviews }) {
    const [modalFlag, setModalFlag] = useState(false);
+   const user = createSelector(
+      (state) => state.session,
+      (session) => session.user
+   );
+   console.log(user);
    const toggle = () => {
       setModalFlag(!modalFlag);
    };
