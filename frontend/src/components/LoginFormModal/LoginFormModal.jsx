@@ -19,7 +19,7 @@ export default function LoginFormModal() {
          password,
       };
       const data = await dispatch(login(payload));
-
+      console.log(data);
       data.errors ? setErrors(data.errors) : closeModal();
    };
 

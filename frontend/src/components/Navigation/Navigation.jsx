@@ -10,7 +10,10 @@ export default function Navigation({ isLoaded }) {
       <ul className="nav-box">
          <li>
             <NavLink to="/">
-               <h1 className="logo">SpookBnB</h1>
+               <img
+                  src="../../../public/Pixel-Paradises-Icon.png"
+                  className="logo-image"
+               />
             </NavLink>
          </li>
          {isLoaded && (

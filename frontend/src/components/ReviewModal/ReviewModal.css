@@ -1,11 +1,33 @@
 .rating-input .filled {
-   color: cyan;
+   color: goldenrod;
+   cursor: pointer;
 }
 
 .rating-input .empty {
-   color: magenta;
+   color: black;
+   cursor: pointer;
 }
 
 .rating-input {
    font-size: 1.4rem;
+   width: fit-content;
+   margin: auto;
+   padding: 0.5rem 0rem;
+}
+
+#modal-content {
+   padding: 1rem;
+}
+
+.review-heading {
+   font-size: 1.7rem;
+   margin-bottom: 0.7rem;
+}
+
+.review-button {
+   outline: none;
+   border-radius: 0.5rem;
+   cursor: pointer;
+   border-width: 1px;
+   box-shadow: black 3px 3px 5px;
 }

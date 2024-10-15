@@ -21,7 +21,7 @@ export default function SpotForm({ isNewSpot }) {
    const [errors, setErrors] = useState({});
    const spot = useSelector((state) => state.spots[id ? id : 0]);
 
-   const handleErrors = () => {
+   const getErrors = () => {
       const errors = {};
       if (!address) errors.address = "Address is required";
       if (!city) errors.city = "City is required";
@@ -45,8 +45,7 @@ export default function SpotForm({ isNewSpot }) {
 
    const handleSubmit = async (e) => {
       e.preventDefault();
-      setErrors({});
-      const errors = handleErrors();
+      const errors = getErrors();
 
       setErrors(errors);
 

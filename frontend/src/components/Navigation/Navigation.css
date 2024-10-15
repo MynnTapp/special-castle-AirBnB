@@ -18,8 +18,9 @@
    margin-bottom: 4rem;
 }
 
-.logo {
-   margin: 0;
+.logo-image {
+   aspect-ratio: 1 / 1.2;
+   width: 3rem;
 }
 
 .active {

@@ -4,7 +4,7 @@ import "./ReviewModal.css";
 import { deleteReview } from "../../store/reviews";
 import { createReview } from "../../store/reviews";
 import { useState } from "react";
-import { IoMdStarOutline } from "react-icons/io";
+import { IoMdStarOutline, IoMdStar } from "react-icons/io";
 
 export default function DeleteReviewModal({ id, flag }) {
    const { closeModal } = useModal();
@@ -46,12 +46,12 @@ export function CreateReviewModal({ id }) {
 
    return (
       <>
-         <h2>How was your stay?</h2>
+         <div className="review-heading">How was your stay?</div>
          <textarea
             placeholder="Leave your review here..."
             onChange={({ target: { value } }) => setReview(value)}
+            className="review-comment"
          ></textarea>
-         <br />
 
          <div
             onMouseLeave={() => setActiveRating(stars)}
@@ -62,41 +62,42 @@ export function CreateReviewModal({ id }) {
                onClick={() => onChange(1)}
                onMouseEnter={() => setActiveRating(1)}
             >
-               <IoMdStarOutline />
+               {activeRating < 1 ? <IoMdStarOutline /> : <IoMdStar />}
             </span>
             <span
                className={activeRating < 2 ? "empty" : "filled"}
                onClick={() => onChange(2)}
                onMouseEnter={() => setActiveRating(2)}
             >
-               <IoMdStarOutline />
+               {activeRating < 2 ? <IoMdStarOutline /> : <IoMdStar />}
             </span>
             <span
                onClick={() => onChange(3)}
                className={activeRating < 3 ? "empty" : "filled"}
                onMouseEnter={() => setActiveRating(3)}
             >
-               <IoMdStarOutline />
+               {activeRating < 3 ? <IoMdStarOutline /> : <IoMdStar />}
             </span>
             <span
                onClick={() => onChange(4)}
                className={activeRating < 4 ? "empty" : "filled"}
                onMouseEnter={() => setActiveRating(4)}
             >
-               <IoMdStarOutline />
+               {activeRating < 4 ? <IoMdStarOutline /> : <IoMdStar />}
             </span>
             <span
                onClick={() => onChange(5)}
                className={activeRating < 5 ? "empty" : "filled"}
                onMouseEnter={() => setActiveRating(5)}
             >
-               <IoMdStarOutline />
+               {activeRating < 5 ? <IoMdStarOutline /> : <IoMdStar />}
             </span>
             <span>Stars</span>
          </div>
          <button
             onClick={handleSubmission}
             disabled={review.length < 10 || stars === 0}
+            className="review-button"
          >
             Submit Review
          </button>
