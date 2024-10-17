@@ -19,39 +19,55 @@ export default function LoginFormModal() {
          password,
       };
       const data = await dispatch(login(payload));
-      console.log(data);
-      data.errors ? setErrors(data.errors) : closeModal();
+      data.message === "Invalid credentials"
+         ? setErrors({ invalid: "The provided credentials were invalid." })
+         : closeModal();
+   };
+
+   const signIn = async (e) => {
+      e.preventDefault();
+      const payload = {
+         credential: "Demo-lition",
+         password: "password",
+      };
+      await dispatch(login(payload));
+      closeModal();
    };
 
    return (
       <>
-         <h1>Log In</h1>
-         <form onSubmit={handleSumbit}>
-            <label>
-               Username or Email
-               <input
-                  type="text"
-                  value={credential}
-                  onChange={({ target: { value } }) => setCredential(value)}
-                  required
-               />
-            </label>
-            <label>
-               Password
-               <input
-                  type="password"
-                  value={password}
-                  onChange={({ target: { value } }) => setPassword(value)}
-                  required
-               />
-            </label>
-            {errors.credential && (
-               <p className="error-message">{errors.credential}</p>
-            )}
-            <button disabled={password.length < 6 || credential.length < 4}>
+         <div className="headers">Log In</div>
+         <form onSubmit={handleSumbit} className="login-form">
+            <p className="error-message">
+               {errors.invalid ? errors.invalid : ""}
+            </p>
+
+            <label>Username or Email</label>
+            <input
+               type="text"
+               value={credential}
+               onChange={({ target: { value } }) => setCredential(value)}
+               required
+            />
+
+            <label>Password</label>
+            <input
+               type="password"
+               value={password}
+               onChange={({ target: { value } }) => setPassword(value)}
+               required
+            />
+
+            <button
+               disabled={password.length < 6 || credential.length < 4}
+               className="login-button"
+            >
                Log In
             </button>
          </form>
+         <a href="" onClick={signIn} className="demo-user">
+            Log in as Demo User
+         </a>
       </>
    );
 }

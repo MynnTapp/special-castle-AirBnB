@@ -50,11 +50,11 @@ module.exports = {
       const err = new Error("User already exists");
       err.errors = {};
       if (checkDupe.dataValues.email === email) {
-         err.errors.email = "User with that email already exists";
+         err.errors.email = "The provided email is invalid.";
       }
 
       if (checkDupe.dataValues.username === username) {
-         err.errors.username = "User with that username already exists";
+         err.errors.username = "Username must be unique.";
       }
 
       return next(err);

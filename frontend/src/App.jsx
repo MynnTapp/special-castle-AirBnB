@@ -26,9 +26,10 @@ function Layout() {
 const router = createBrowserRouter([
    {
       element: <Layout />,
+      path: "/",
       children: [
          {
-            path: "/",
+            index: true,
             element: (
                <main>
                   <AllTheSpots isCurrent={false} />
@@ -36,15 +37,15 @@ const router = createBrowserRouter([
             ),
          },
          {
-            path: "/spots/:id",
+            path: "spots/:id",
             element: <SpotDetailPage />,
          },
          {
-            path: "/spots/new",
+            path: "spots/new",
             element: <SpotForm isNewSpot={true} />,
          },
          {
-            path: "/spots/current",
+            path: "spots/current",
             element: (
                <>
                   <h1>Manage Spots</h1>
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
             ),
          },
          {
-            path: "/spots/:id/edit",
+            path: "spots/:id/edit",
             element: <SpotForm isNewSpot={false} />,
          },
       ],

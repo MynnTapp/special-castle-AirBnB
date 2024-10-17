@@ -13,7 +13,6 @@ export async function csrfFetch(url, options = {}) {
 
    if (!res.ok) {
       const data = await res.json();
-      data.errors = "Something went wrong";
       return data;
    }
    const parsedRes = await res.json();

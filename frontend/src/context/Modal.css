@@ -22,4 +22,6 @@
    position: absolute;
    background-color: white;
    border-radius: 1rem;
+   width: 20%;
+   height: fit-content;
 }
