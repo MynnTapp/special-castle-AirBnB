@@ -1,12 +1,3 @@
-main {
-   align-items: start;
-}
-
-.form-box {
-   margin: auto;
-   max-width: 40%;
-}
-
 h3 {
    margin-bottom: 0;
 }
@@ -14,10 +5,17 @@ h3 {
 .notice {
    margin-top: 0;
 }
+
 form {
    > p {
       margin-top: 0;
    }
+}
+
+.spot-form {
+   text-align: left;
+   max-width: 30%;
+   margin: auto;
 }
 
 .add-it {
@@ -25,16 +23,14 @@ form {
    background-color: red;
    width: fit-content;
    cursor: pointer;
-   margin-top: 1.5rem;
+   margin: 1.5rem 0rem;
+   box-shadow: black 3px 3px 3px inset;
+   padding: 0.6rem 1rem;
+   border-width: 1px;
 }
 
-.city {
-   width: 64%;
-}
-
-.comma {
-   width: 2%;
-   justify-self: flex-start;
+.add-it:hover {
+   box-shadow: black 3px 4px 4px;
 }
 
 .error-message {
@@ -44,10 +40,50 @@ form {
 
 .description {
    height: 4rem;
-   width: 100%;
+   width: 93%;
 }
 
 .button-box {
    display: flex;
    justify-content: center;
+}
+
+.location {
+   display: flex;
+   flex-direction: column;
+}
+
+.city-state {
+   display: flex;
+}
+
+.lat-lng {
+   display: flex;
+   justify-content: space-between;
+   > .lat {
+      width: 48%;
+      > input {
+         width: 93%;
+      }
+   }
+   > .lng {
+      width: 49%;
+      > input {
+         width: 97%;
+      }
+   }
+}
+
+.comma {
+   font-size: 1.6rem;
+   line-height: 1rem;
+   padding-left: 0.2rem;
+}
+
+.city {
+   width: 100%;
+}
+
+.city-input {
+   width: 90%;
 }

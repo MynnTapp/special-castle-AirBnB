@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import "./SpotDetailPage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getAllSpots } from "../../store/spots";
 import { getAllReviews } from "../../store/reviews";
 import BookingBlock from "./BookingBlock";
 import Reviews from "../Reviews";
@@ -13,7 +12,6 @@ export default function SpotDetailPage() {
    const spot = useSelector((state) => state.spots[id]);
    const reviews = useSelector((state) => state.reviews);
    useEffect(() => {
-      dispatch(getAllSpots());
       dispatch(getAllReviews(id));
    }, [dispatch, id]);
 
@@ -23,7 +21,7 @@ export default function SpotDetailPage() {
    return (
       <div className="the-page">
          <div className="main-spot-content">
-            <h1>{spot.name}</h1>
+            <div className="headers">{spot.name}</div>
             <h4>
                Location: {spot.city}, {spot.state}, {spot.country}
             </h4>

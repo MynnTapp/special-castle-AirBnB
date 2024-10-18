@@ -5,6 +5,7 @@ body {
 
 button:hover {
    cursor: pointer;
+   box-shadow: black 3px 4px 4px;
 }
 
 button:disabled {
@@ -12,8 +13,17 @@ button:disabled {
    cursor: default;
 }
 
+button {
+   border-width: 1px;
+   box-shadow: black 3px 3px 3px inset;
+   background-color: red;
+}
+
 input {
    box-shadow: black 1px 1px 3px inset;
+   line-height: 1.3rem;
+   margin-bottom: 0.6rem;
+   outline: none;
 }
 
 label {
@@ -26,11 +36,11 @@ label {
    margin-bottom: 0.9rem;
 }
 
-form > input {
-   margin-bottom: 0.7rem;
-}
-
 form {
    width: 75%;
    margin: auto;
+}
+
+.errors.message {
+   color: red;
 }

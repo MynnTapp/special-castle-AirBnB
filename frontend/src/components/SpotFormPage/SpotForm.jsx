@@ -70,162 +70,172 @@ export default function SpotForm({ isNewSpot }) {
    };
 
    return (
-      <main className="form-box">
-         <h1>{isNewSpot ? "Create a New Spot" : "Update your Spot"}</h1>
+      <form onSubmit={handleSubmit} className="spot-form">
+         <div className="headers">
+            {isNewSpot ? "Create a New Spot" : "Update your Spot"}
+         </div>
          <h3>Where&apos;s your place located?</h3>
          <p>
             Guests will only get your exact address once they booked a
             reservation.
          </p>
-         <form onSubmit={handleSubmit}>
-            <label>
-               Street Address{" "}
-               <span className="error-message">
-                  {errors.address ? errors.address : ""}
-               </span>
-            </label>
-            <br />
-            <input
-               type="text"
-               placeholder="Address"
-               value={spot ? spot.address : address}
-               onChange={({ target: { value } }) => setAddress(value)}
-            />
-            <div className="city">
-               <label>
-                  City{" "}
-                  <span className="error-message">
-                     {errors.city ? errors.city : ""}
-                  </span>
-               </label>
-               <br />
-               <input
-                  type="text"
-                  placeholder="City"
-                  value={spot ? spot.city : city}
-                  onChange={({ target: { value } }) => setCity(value)}
-               />
-            </div>
-            <div className="state">
-               <label>
-                  State{" "}
-                  <span className="error-message">
-                     {errors.state ? errors.state : ""}
-                  </span>
-               </label>
-               <br />
-               <input
-                  type="text"
-                  placeholder="STATE"
-                  value={spot ? spot.state : state}
-                  onChange={({ target: { value } }) => setState(value)}
-               />
-            </div>
+         <div className="location">
             <label>
                Country{" "}
-               <span className="error-message">
+               <span className="errors message">
                   {errors.country ? errors.country : ""}
                </span>
             </label>
-            <br />
             <input
                type="text"
                placeholder="Country"
                value={spot ? spot.country : country}
                onChange={({ target: { value } }) => setCountry(value)}
             />
-            <br />
             <label>
-               Latitude <span className="error-message"></span>
+               Street Address{" "}
+               <span className="errors message">
+                  {errors.address ? errors.address : ""}
+               </span>
             </label>
-            <br />
+
+            <input
+               type="text"
+               placeholder="Address"
+               value={spot ? spot.address : address}
+               onChange={({ target: { value } }) => setAddress(value)}
+            />
+            <div className="city-state">
+               <div className="city">
+                  <label>
+                     City{" "}
+                     <span className="errors message">
+                        {errors.city ? errors.city : ""}
+                     </span>
+                  </label>
+                  <br />
+                  <input
+                     type="text"
+                     placeholder="City"
+                     value={spot ? spot.city : city}
+                     onChange={({ target: { value } }) => setCity(value)}
+                     className="city-input"
+                  />
+                  <span className="comma">,</span>
+               </div>
+               <div className="state">
+                  <label>
+                     State{" "}
+                     <span className="errors message">
+                        {errors.state ? errors.state : ""}
+                     </span>
+                  </label>
+                  <br />
+                  <input
+                     type="text"
+                     placeholder="STATE"
+                     value={spot ? spot.state : state}
+                     onChange={({ target: { value } }) => setState(value)}
+                  />
+               </div>
+            </div>
+
+            <div className="lat-lng">
+               <div className="lat">
+                  <label>
+                     Latitude <span className="errors message"></span>
+                  </label>
+                  <br />
+                  <input
+                     type="text"
+                     value={spot ? spot.lat : lat}
+                     onChange={({ target: { value } }) => setLat(value)}
+                  />
+                  <span className="comma">,</span>
+               </div>
+               <div className="lng">
+                  <label>
+                     Longitude <span className="errors message"></span>
+                  </label>
+                  <br />
+                  <input
+                     type="text"
+                     value={spot ? spot.lng : lng}
+                     onChange={({ target: { value } }) => setLng(value)}
+                  />
+               </div>
+            </div>
+         </div>
+
+         <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
+         <h3>Describe your place to guests</h3>
+         <p>
+            Mention the best features of your space, and special amentities like
+            fast wifi or parking, and what you love about the neighborhood.
+         </p>
+         <textarea
+            className="description"
+            type="text"
+            minLength="30"
+            placeholder="Description"
+            value={spot ? spot.description : description}
+            onChange={({ target: { value } }) => setDescription(value)}
+         />
+         {errors.description ? (
+            <div className="errors message">{errors.description}</div>
+         ) : null}
+         <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
+         <h3>Create a title for your spot</h3>
+         <p>
+            Catch guests&apos; attention with a spot title that highlights what
+            makes your place special.
+         </p>
+         <input
+            type="text"
+            placeholder="Name of your spot"
+            value={spot ? spot.name : name}
+            onChange={({ target: { value } }) => setName(value)}
+         />
+         {errors.name ? (
+            <div className="errors message">{errors.name}</div>
+         ) : null}
+         <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
+         <h3>Set a base price for your spot</h3>
+         <p>
+            Competitive pricing can help your listing stand out and rank higher
+            in search results.
+         </p>
+         <div>
+            <span>$ </span>
             <input
                type="number"
-               value={spot ? spot.lat : lat}
-               onChange={({ target: { value } }) => setLat(value)}
+               min="1"
+               value={spot ? spot.price : price}
+               placeholder="Price per night (USD)"
+               onChange={({ target: { value } }) => setPrice(Number(value))}
             />
-            <br />
-            <label>
-               Longitude <span className="error-message"></span>
-            </label>
-            <br />
-            <input
-               type="number"
-               value={spot ? spot.lng : lng}
-               onChange={({ target: { value } }) => setLng(value)}
-            />
-            <br />
-            <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
-            <h3>Describe your place to guests</h3>
-            <p>
-               Mention the best features of your space, and special amentities
-               like fast wifi or parking, and what you love about the
-               neighborhood.
-            </p>
-            <textarea
-               className="description"
-               type="text"
-               minLength="30"
-               placeholder="Description"
-               value={spot ? spot.description : description}
-               onChange={({ target: { value } }) => setDescription(value)}
-            />
-            {errors.description ? (
-               <div className="error-message">{errors.description}</div>
-            ) : null}
-            <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
-            <h3>Create a title for your spot</h3>
-            <p>
-               Catch guests&apos; attention with a spot title that highlights
-               what makes your place special.
-            </p>
-            <input
-               type="text"
-               placeholder="Name of your spot"
-               value={spot ? spot.name : name}
-               onChange={({ target: { value } }) => setName(value)}
-            />
-            {errors.name ? (
-               <div className="error-message">{errors.name}</div>
-            ) : null}
-            <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
-            <h3>Set a base price for your spot</h3>
-            <p>
-               Competitive pricing can help your listing stand out and rank
-               higher in search results.
-            </p>
-            <div>
-               <span>$ </span>
-               <input
-                  type="number"
-                  min="1"
-                  value={spot ? spot.price : price}
-                  placeholder="Price per night (USD)"
-                  onChange={({ target: { value } }) => setPrice(Number(value))}
-               />
-            </div>
-            {errors.price ? (
-               <div className="error-message">{errors.price}</div>
-            ) : null}
-            <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
-            <h3>Liven up your spot with photos</h3>
-            <p>Submit a link to at least one photo to publish your spot.</p>
-            <input
-               type="text"
-               placeholder="Preview Image URL"
-               value={spot ? spot.previewImage : previewImg}
-               onChange={({ target: { value } }) => setPreviewImg(value)}
-            />
-            {errors.previewImg ? (
-               <div className="error-message">{errors.previewImg}</div>
-            ) : null}
-            <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
-            <div className="button-box">
-               <button type="submit" className="add-it">
-                  {isNewSpot ? "Create Spot" : "Update Spot"}
-               </button>
-            </div>
-         </form>
-      </main>
+         </div>
+         {errors.price ? (
+            <div className="errors message">{errors.price}</div>
+         ) : null}
+         <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
+         <h3>Liven up your spot with photos</h3>
+         <p>Submit a link to at least one photo to publish your spot.</p>
+         <input
+            type="text"
+            placeholder="Preview Image URL"
+            value={spot ? spot.previewImage : previewImg}
+            onChange={({ target: { value } }) => setPreviewImg(value)}
+         />
+         {errors.previewImg ? (
+            <div className="errors message">{errors.previewImg}</div>
+         ) : null}
+         <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
+         <div className="button-box">
+            <button type="submit" className="add-it">
+               {isNewSpot ? "Create Spot" : "Update Spot"}
+            </button>
+         </div>
+      </form>
    );
 }

@@ -17,10 +17,11 @@ body {
 
 .login-button {
    background-color: red;
-   box-shadow: black 3px 2px;
+   box-shadow: black 3px 3px 3px inset;
    color: white;
    padding: 0.7rem 0rem;
    font-size: 1.2rem;
    text-align: center;
    margin-bottom: 1rem;
+   border-radius: 1px;
 }

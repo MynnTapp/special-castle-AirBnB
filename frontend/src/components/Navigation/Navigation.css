@@ -7,7 +7,6 @@
 .nav-box {
    margin-bottom: 0;
    padding: 0.2rem 0.8rem;
-   border-bottom: 2px solid gray;
    background-color: gray;
    border-radius: 1rem;
    list-style: none;
@@ -23,6 +22,15 @@
    width: 3rem;
 }
 
+.image-box {
+   margin-right: 10%;
+}
+
 .active {
    text-decoration: none;
+}
+
+.welcome {
+   font-size: 2rem;
+   color: antiquewhite;
 }

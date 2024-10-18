@@ -15,9 +15,12 @@
    align-items: center;
 }
 
-.button {
+.booking-button {
    background-color: red;
    color: white;
    height: 1.5rem;
+}
+
+.booking-button:hover {
    cursor: pointer;
 }

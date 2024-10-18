@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import AllTheSpots from "./components/AllTheSpots/AllTheSpots";
 import SpotDetailPage from "./components/SpotDetailPage";
 import SpotForm from "./components/SpotFormPage";
+import { getAllSpots } from "./store/spots";
 
 function Layout() {
    const dispatch = useDispatch();
@@ -13,6 +14,7 @@ function Layout() {
 
    useEffect(() => {
       dispatch(restoreUser()).then(() => setIsLoaded(true));
+      dispatch(getAllSpots());
    }, [dispatch]);
 
    return (

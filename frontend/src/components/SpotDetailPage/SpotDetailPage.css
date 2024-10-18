@@ -1,6 +1,6 @@
 .main-spot-content {
    text-align: left;
-   width: fit-content;
+   max-width: 1200px;
    display: flex;
    flex-direction: column;
 }
@@ -17,9 +17,4 @@
 .divider {
    border: 1px solid gray;
    margin-bottom: 2rem;
-}
-
-.the-page {
-   margin: 0rem 5rem;
-   padding: 0rem 5rem;
 }

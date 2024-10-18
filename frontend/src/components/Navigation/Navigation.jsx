@@ -14,7 +14,7 @@ export default function Navigation({ isLoaded }) {
    console.log(sessionUser);
    return (
       <ul className="nav-box">
-         <li>
+         <li className="image-box">
             <NavLink to="/">
                <img
                   src="../../../public/Pixel-Paradises-Icon.png"
@@ -22,8 +22,9 @@ export default function Navigation({ isLoaded }) {
                />
             </NavLink>
          </li>
+         <li className="welcome">Welcome to Pixel Paradises</li>
          {isLoaded && (
-            <li>
+            <li className="profile-box">
                {sessionUser ? (
                   <NavLink to="/spots/new">Create a New Spot</NavLink>
                ) : null}

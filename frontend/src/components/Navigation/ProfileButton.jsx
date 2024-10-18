@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { signout } from "../../store/session";
 import { FaUserCircle } from "react-icons/fa";
+import { MdApps } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
@@ -45,7 +46,8 @@ export default function ProfileButton({ user }) {
    const ulClassname = "profile-dropdown" + (showMenu ? "" : " hidden");
    return (
       <>
-         <button onClick={toggleMenu} style={{ cursor: "pointer" }}>
+         <button onClick={toggleMenu} className="profile-button">
+            <MdApps />
             <FaUserCircle />
          </button>
          <ul className={ulClassname} ref={ulRef}>
@@ -57,7 +59,9 @@ export default function ProfileButton({ user }) {
                      <NavLink to="/spots/current">Manage Spots</NavLink>
                   </li>
                   <li>
-                     <button onClick={logout}>Log Out</button>
+                     <button onClick={logout} className="logout-button">
+                        Log Out
+                     </button>
                   </li>
                </>
             ) : (

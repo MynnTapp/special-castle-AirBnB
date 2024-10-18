@@ -25,7 +25,7 @@ export default function BookingBlock({ spot, reviews }) {
             </div>
             <button
                onClick={() => alert("Feature Coming Soon...")}
-               className="button"
+               className="booking-button"
             >
                Reserve
             </button>

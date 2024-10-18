@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllSpots } from "../../store/spots";
+import { useSelector } from "react-redux";
 import { FaStar } from "react-icons/fa";
 import "./AllTheSpots.css";
 import { useNavigate } from "react-router-dom";
@@ -8,15 +6,10 @@ import OpenModal from "../OpenModal";
 import DeleteSpotModal from "../DeleteSpotModal";
 
 export default function AllTheSpots({ isCurrent }) {
-   const dispatch = useDispatch();
    const navigateTo = useNavigate();
    const sessionUser = useSelector((state) => state.session.user);
    const spotsData = useSelector((state) => state.spots);
    const spots = Object.values(spotsData);
-
-   useEffect(() => {
-      dispatch(getAllSpots());
-   }, [dispatch, isCurrent]);
 
    return (
       <div className="content_box">
