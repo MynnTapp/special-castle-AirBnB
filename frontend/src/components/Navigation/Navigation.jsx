@@ -15,7 +15,7 @@ export default function Navigation({ isLoaded }) {
    return (
       <ul className="nav-box">
          <li className="image-box">
-            <NavLink to="/">
+            <NavLink data-testid="logo" to="/">
                <img
                   src="../../../public/Pixel-Paradises-Icon.png"
                   className="logo-image"
@@ -24,12 +24,22 @@ export default function Navigation({ isLoaded }) {
          </li>
          <li className="welcome">Welcome to Pixel Paradises</li>
          {isLoaded && (
-            <li className="profile-box">
-               {sessionUser ? (
-                  <NavLink to="/spots/new">Create a New Spot</NavLink>
-               ) : null}
-               <ProfileButton user={sessionUser} />
-            </li>
+            <>
+               <span
+                  style={{
+                     display: sessionUser ? "block" : "none",
+                     position: "relative",
+                     left: "12.5vw",
+                  }}
+               >
+                  <NavLink to="/spots/new" data-testid="create-new-spot-button">
+                     Create a New Spot
+                  </NavLink>
+               </span>
+               <li className="profile-box">
+                  <ProfileButton user={sessionUser} />
+               </li>
+            </>
          )}
       </ul>
    );

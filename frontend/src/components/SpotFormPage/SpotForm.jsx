@@ -3,6 +3,7 @@ import { addASpot } from "../../store/spots";
 import "./SpotForm.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { addTheImages } from "../../store/spotImages";
 
 export default function SpotForm({ isNewSpot }) {
    const dispatch = useDispatch();
@@ -18,10 +19,16 @@ export default function SpotForm({ isNewSpot }) {
    const [name, setName] = useState("");
    const [price, setPrice] = useState(1);
    const [previewImg, setPreviewImg] = useState("");
+   const [img2, setImg2] = useState("");
+   const [img3, setImg3] = useState("");
+   const [img4, setImg4] = useState("");
+   const [img5, setImg5] = useState("");
    const [errors, setErrors] = useState({});
    const spot = useSelector((state) => state.spots[id ? id : 0]);
 
-   const getErrors = () => {
+   const getErrors = (e) => {
+      e.preventDefault();
+      const imgRegex = /\.(jpg|jpeg|png)$/m;
       const errors = {};
       if (!address) errors.address = "Address is required";
       if (!city) errors.city = "City is required";
@@ -31,46 +38,54 @@ export default function SpotForm({ isNewSpot }) {
          errors.description = "Please write at least 30 characters";
       if (!name) errors.name = "Name is required";
       if (!price) errors.price = "Price is required";
-      if (!previewImg) {
-         errors.previewImg = "Preview image is required";
-      } else if (
-         !previewImg.endsWith(".jpeg") &&
-         !previewImg.endsWith(".png") &&
-         !previewImg.endsWith(".jpg")
-      ) {
-         errors.previewImg = "Image URL must end in .png, .jpg, or .jpeg";
-      }
-      return errors;
+      if (!previewImg) errors.previewImg1 = "Preview image is required";
+      if (!imgRegex.test(previewImg))
+         errors.previewImg2 =
+            "Preview image URL must end in .png, .jpg, or .jpeg";
+
+      if (img2 && !imgRegex.test(img2))
+         errors.img2 = "Image URL must end in .png, .jpg, or .jpeg";
+      if (img3 && !imgRegex.test(img3))
+         errors.img3 = "Image URL must end in .png, .jpg, or .jpeg";
+      if (img4 && !imgRegex.test(img4))
+         errors.img4 = "Image URL must end in .png, .jpg, or .jpeg";
+      if (img5 && !imgRegex.test(img5))
+         errors.img5 = "Image URL must end in .png, .jpg, or .jpeg";
+      Object.values(errors).length ? setErrors(errors) : handleSubmit();
    };
 
-   const handleSubmit = async (e) => {
-      e.preventDefault();
-      const errors = getErrors();
+   const handleSubmit = async () => {
+      const imagesPayload = [
+         { url: previewImg, preview: true },
+         { url: img2 },
+         { url: img3 },
+         { url: img4 },
+         { url: img5 },
+      ].map((ele) => {
+         if (!ele.url) ele.url = "dummyData.png";
+         return ele;
+      });
 
-      setErrors(errors);
+      const payload = {
+         address,
+         city,
+         state,
+         country,
+         lat,
+         lng,
+         name,
+         price,
+         description,
+      };
 
-      if (!Object.values(errors).length) {
-         const payload = {
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            price,
-            description,
-         };
-         const spot = await dispatch(addASpot(payload));
-
-         if (!spot.errors) {
-            navigateTo(`/spots/${spot.id}`);
-         }
-      }
+      const spot = await dispatch(addASpot(payload));
+      if (!spot) return <h1>Loading...</h1>;
+      await dispatch(addTheImages(imagesPayload, spot.id));
+      navigateTo(`/spots/${spot.id}`);
    };
 
    return (
-      <form onSubmit={handleSubmit} className="spot-form">
+      <form onSubmit={getErrors} className="spot-form">
          <div className="headers">
             {isNewSpot ? "Create a New Spot" : "Update your Spot"}
          </div>
@@ -101,7 +116,7 @@ export default function SpotForm({ isNewSpot }) {
 
             <input
                type="text"
-               placeholder="Address"
+               placeholder="Street Address"
                value={spot ? spot.address : address}
                onChange={({ target: { value } }) => setAddress(value)}
             />
@@ -147,7 +162,7 @@ export default function SpotForm({ isNewSpot }) {
                   </label>
                   <br />
                   <input
-                     type="text"
+                     type="number"
                      value={spot ? spot.lat : lat}
                      onChange={({ target: { value } }) => setLat(value)}
                   />
@@ -159,7 +174,7 @@ export default function SpotForm({ isNewSpot }) {
                   </label>
                   <br />
                   <input
-                     type="text"
+                     type="number"
                      value={spot ? spot.lng : lng}
                      onChange={({ target: { value } }) => setLng(value)}
                   />
@@ -177,7 +192,7 @@ export default function SpotForm({ isNewSpot }) {
             className="description"
             type="text"
             minLength="30"
-            placeholder="Description"
+            placeholder="Please write at least 30 characters"
             value={spot ? spot.description : description}
             onChange={({ target: { value } }) => setDescription(value)}
          />
@@ -221,15 +236,55 @@ export default function SpotForm({ isNewSpot }) {
          <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
          <h3>Liven up your spot with photos</h3>
          <p>Submit a link to at least one photo to publish your spot.</p>
-         <input
-            type="text"
-            placeholder="Preview Image URL"
-            value={spot ? spot.previewImage : previewImg}
-            onChange={({ target: { value } }) => setPreviewImg(value)}
-         />
-         {errors.previewImg ? (
-            <div className="errors message">{errors.previewImg}</div>
-         ) : null}
+
+         <div
+            style={{
+               display: "flex",
+               flexDirection: "column",
+               maxWidth: "50%",
+            }}
+         >
+            <input
+               type="text"
+               placeholder="Preview Image URL"
+               value={spot ? spot.previewImage : previewImg}
+               onChange={({ target: { value } }) => setPreviewImg(value)}
+            />
+            {errors.previewImg1 && (
+               <div className="errors message">{errors.previewImg1}</div>
+            )}
+            {errors.previewImg2 && (
+               <div className="errors message">{errors.previewImg2}</div>
+            )}
+            <input
+               type="text"
+               placeholder="Image URL"
+               value={img2}
+               onChange={({ target: { value } }) => setImg2(value)}
+            />
+            {errors.img2 && <div className="errors message">{errors.img2}</div>}
+            <input
+               type="text"
+               placeholder="Image URL"
+               value={img3}
+               onChange={({ target: { value } }) => setImg3(value)}
+            />
+            {errors.img3 && <div className="errors message">{errors.img3}</div>}
+            <input
+               type="text"
+               placeholder="Image URL"
+               value={img4}
+               onChange={({ target: { value } }) => setImg4(value)}
+            />
+            {errors.img4 && <div className="errors message">{errors.img4}</div>}
+            <input
+               type="text"
+               placeholder="Image URL"
+               value={img5}
+               onChange={({ target: { value } }) => setImg5(value)}
+            />
+            {errors.img5 && <div className="errors message">{errors.img5}</div>}
+         </div>
          <div style={{ border: "1px solid gray", marginTop: "1rem" }}></div>
          <div className="button-box">
             <button type="submit" className="add-it">

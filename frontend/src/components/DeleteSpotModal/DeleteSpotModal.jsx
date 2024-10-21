@@ -6,7 +6,6 @@ import { removeSpot } from "../../store/spots";
 export default function DeleteSpotModal({ id }) {
    const { closeModal } = useModal();
    const dispatch = useDispatch();
-
    const handleDeletion = async (e) => {
       e.preventDefault();
       dispatch(removeSpot(id));

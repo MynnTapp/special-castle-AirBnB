@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { FaStar } from "react-icons/fa";
 import "./AllTheSpots.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import OpenModal from "../OpenModal";
 import DeleteSpotModal from "../DeleteSpotModal";
 
@@ -10,65 +10,81 @@ export default function AllTheSpots({ isCurrent }) {
    const sessionUser = useSelector((state) => state.session.user);
    const spotsData = useSelector((state) => state.spots);
    const spots = Object.values(spotsData);
-
+   console.log(
+      "inside the AllSpots component, these are the spots ===> ",
+      spots
+   );
    return (
-      <div className="content_box">
+      <div className="content_box" data-testid="spots-list">
          {isCurrent
             ? spots
-                 ?.filter((spot) => spot.Owner.id === sessionUser?.id)
+                 ?.filter((spot) => spot?.Owner?.id === sessionUser?.id)
                  .map((spot, i) => (
-                    <div key={i + 1} className="spot-tile">
+                    <div
+                       key={i + 1}
+                       className="spot-tile"
+                       data-testid="spot-tile"
+                    >
                        <img
-                          src={spot.previewImage}
-                          onClick={() => navigateTo(`/spots/${spot.id}`)}
+                          src={spot?.previewImage}
+                          onClick={() => navigateTo(`/spots/${spot?.id}`)}
                           className="spot-image"
                           alt="Image Not Found"
                        ></img>
                        <div className="spot-details">
-                          <p>
-                             {spot.city}, {spot.state}
+                          <p className="locale-rating">
+                             {spot?.city}, {spot?.state}
                              <span className="rating">
                                 <FaStar />
-                                {spot.avgRating ? spot.avgRating : "NEW!"}
+                                {spot?.avgRating ? spot?.avgRating : "NEW!"}
                              </span>
-                             <br />${spot.price.toFixed(2)} night
                           </p>
+                          ${spot?.price.toFixed(2)} night
                        </div>
                        <div className="button-box">
                           <button
                              onClick={() => {
-                                navigateTo(`/spots/${spot.id}/edit`);
+                                navigateTo(`/spots/${spot?.id}/edit`);
                              }}
                           >
                              Update
                           </button>
                           <OpenModal
                              buttonText="Delete"
-                             modalComponent={<DeleteSpotModal id={spot.id} />}
+                             modalComponent={<DeleteSpotModal id={spot?.id} />}
                           />
                        </div>
                     </div>
                  ))
             : spots?.map((spot, i) => (
-                 <div key={i + 1} className="spot-tile">
+                 <Link
+                    key={i + 1}
+                    className="spot-tile"
+                    data-testid="spot-tile"
+                    to={`/spots/${spot.id}`}
+                 >
                     <img
-                       src={spot.previewImage}
+                       src={spot?.previewImage}
+                       data-testid="spot-thumbnail-image"
                        className="spot-image"
-                       onClick={() => navigateTo(`/spots/${spot.id}`)}
                        alt="Image Not Found"
                     ></img>
 
                     <div className="spot-details">
                        <p className="locale-rating">
-                          {spot.city}, {spot.state}
-                          <span className="rating">
+                          <span data-testid="spot-city">
+                             {spot?.city}, {spot?.state}
+                          </span>
+                          <span className="rating" data-testid="spot-rating">
                              <FaStar />
-                             {spot.avgRating ? spot.avgRating : "NEW!"}
+                             {spot?.avgRating ? spot?.avgRating : "NEW!"}
                           </span>
                        </p>
-                       ${spot.price.toFixed(2)} night
+                       <span data-testid="spot-price">
+                          ${spot?.price.toFixed(2)} night
+                       </span>
                     </div>
-                 </div>
+                 </Link>
               ))}
       </div>
    );

@@ -1,0 +1,14 @@
+.modal-button {
+   width: fit-content;
+   padding: 1% 2%;
+   color: white;
+}
+
+.modal-button.enabled {
+   box-shadow: black 3px 4px 4px;
+}
+
+.modal-button.enabled:hover {
+   cursor: pointer;
+   box-shadow: none;
+}

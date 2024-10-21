@@ -20,17 +20,25 @@ const remove = (id) => {
    };
 };
 
-const getAll = (reviews) => {
+const getAll = (payload) => {
    return {
       type: GET_ALL_REVIEWS,
-      payload: reviews,
+      payload,
    };
+};
+
+const normalizer = (data) => {
+   const res = {};
+   console.log(data);
+   data.forEach((ele) => (res[ele.id] = ele));
+
+   return res;
 };
 
 export const getAllReviews = (id) => async (dispatch) => {
    const res = await csrfFetch(`/api/spots/${id}/reviews`);
    if (!res.errors) {
-      dispatch(getAll(res.Reviews));
+      dispatch(getAll(normalizer(res.Reviews)));
       return res;
    }
 };
@@ -54,21 +62,22 @@ export const deleteReview = (id) => async (dispatch) => {
    dispatch(remove(id));
 };
 
-export default function reviewsReducer(state = initialState, action) {
-   switch (action.type) {
+export default function reviewsReducer(
+   state = initialState,
+   { type, payload }
+) {
+   switch (type) {
       case GET_ALL_REVIEWS: {
-         const newState = {};
-         action.payload.forEach((review) => (newState[review.id] = review));
-         return newState;
+         return { ...payload };
       }
       case CREATE_REVIEW:
          return {
             ...state,
-            [action.payload.id]: action.payload,
+            [payload.id]: payload,
          };
       case DELETE_REVIEW: {
          const newState = { ...state };
-         delete newState[action.payload];
+         delete newState[payload];
          return newState;
       }
       default:

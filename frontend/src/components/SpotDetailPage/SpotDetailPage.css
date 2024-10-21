@@ -1,13 +1,13 @@
 .main-spot-content {
    text-align: left;
-   max-width: 1200px;
+   max-width: 1000px;
    display: flex;
    flex-direction: column;
 }
 
 .preview {
    width: 50%;
-   height: 35vh;
+   height: 22vw;
 }
 
 .details {

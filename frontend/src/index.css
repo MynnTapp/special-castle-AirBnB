@@ -1,11 +1,6 @@
-body {
+* {
    font-family: Arial, Helvetica, sans-serif;
    text-decoration: none;
-}
-
-button:hover {
-   cursor: pointer;
-   box-shadow: black 3px 4px 4px;
 }
 
 button:disabled {

@@ -18,3 +18,17 @@
    margin-top: 1rem;
    border-radius: 1px;
 }
+
+.signup-button:disabled {
+   box-shadow: black 3px 3px 3px inset;
+   background-color: #770000;
+}
+
+.signup-button.enabled {
+   box-shadow: black 3px 4px 4px;
+   cursor: pointer;
+}
+
+.signup-button.enabled:hover {
+   box-shadow: none;
+}

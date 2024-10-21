@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/session";
 import { useModal } from "../../context/Modal";
@@ -6,6 +6,7 @@ import "./LoginForm.css";
 
 export default function LoginFormModal() {
    const dispatch = useDispatch();
+   const isDisabled = useRef(true);
    const [credential, setCredential] = useState("");
    const [password, setPassword] = useState("");
    const [errors, setErrors] = useState({});
@@ -34,8 +35,15 @@ export default function LoginFormModal() {
       closeModal();
    };
 
+   const updateStatus = () => {
+      credential.length < 4 || password.length < 6
+         ? (isDisabled.current = true)
+         : (isDisabled.current = false);
+      return isDisabled;
+   };
+
    return (
-      <>
+      <div data-testid="login-modal">
          <div className="headers">Log In</div>
          <form onSubmit={handleSumbit} className="login-form">
             <p className="error-message">
@@ -45,6 +53,7 @@ export default function LoginFormModal() {
             <label>Username or Email</label>
             <input
                type="text"
+               data-testid="credential-input"
                value={credential}
                onChange={({ target: { value } }) => setCredential(value)}
                required
@@ -53,21 +62,29 @@ export default function LoginFormModal() {
             <label>Password</label>
             <input
                type="password"
+               data-testid="password-input"
                value={password}
                onChange={({ target: { value } }) => setPassword(value)}
                required
             />
 
             <button
-               disabled={password.length < 6 || credential.length < 4}
-               className="login-button"
+               type="submit"
+               disabled={updateStatus().current}
+               data-testid="login-button"
+               className={`login-button ${isDisabled.current ? "" : "enabled"}`}
             >
                Log In
             </button>
          </form>
-         <a href="" onClick={signIn} className="demo-user">
+         <a
+            href=""
+            onClick={signIn}
+            data-testid="demo-user-login"
+            className="demo-user"
+         >
             Log in as Demo User
          </a>
-      </>
+      </div>
    );
 }

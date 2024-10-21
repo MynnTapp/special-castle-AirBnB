@@ -6,9 +6,10 @@
    list-style-type: none;
    position: absolute;
    background-color: white;
-   padding-inline-start: 0;
-   padding: 0.5rem;
+   padding: 1rem 0.7rem 1rem 0.7rem;
    border-radius: 0.5rem;
+   width: fit-content;
+   height: 6.5em;
 }
 
 .profile-button {
@@ -23,7 +24,15 @@
 
 .profile-button:hover {
    background-color: red;
+   cursor: pointer;
+   box-shadow: black 3px 4px 4px;
+}
+
+.logout-button:hover {
+   cursor: pointer;
 }
 
 .logout-button {
+   width: fit-content;
+   padding: 0.3rem 0.7rem;
 }

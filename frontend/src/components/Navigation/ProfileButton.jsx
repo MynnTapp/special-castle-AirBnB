@@ -46,11 +46,19 @@ export default function ProfileButton({ user }) {
    const ulClassname = "profile-dropdown" + (showMenu ? "" : " hidden");
    return (
       <>
-         <button onClick={toggleMenu} className="profile-button">
+         <button
+            onClick={toggleMenu}
+            className="profile-button"
+            data-testid="user-menu-button"
+         >
             <MdApps />
             <FaUserCircle />
          </button>
-         <ul className={ulClassname} ref={ulRef}>
+         <ul
+            className={ulClassname}
+            ref={ulRef}
+            data-testid="user-dropdown-menu"
+         >
             {user ? (
                <>
                   <li>Hello, {user.firstName}</li>

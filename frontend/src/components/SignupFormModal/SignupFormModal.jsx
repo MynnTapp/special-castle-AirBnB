@@ -1,11 +1,12 @@
 import "./SignupForm.css";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { signup } from "../../store/session";
 import { useModal } from "../../context/Modal";
 
 export default function SignupFormModal() {
    const dispatch = useDispatch();
+   const isDisabled = useRef(true);
    const [username, setUsername] = useState("");
    const [firstName, setFirstName] = useState("");
    const [lastName, setLastName] = useState("");
@@ -22,6 +23,20 @@ export default function SignupFormModal() {
          errors.password = "Provided passwords do not match.";
       if (!email.includes("@")) errors.email = "Provided email is invalid.";
       Object.values(errors).length === 0 ? handleSubmit() : setErrors(errors);
+   };
+
+   const updateStatus = () => {
+      !(
+         firstName &&
+         lastName &&
+         email &&
+         username.length > 3 &&
+         password.length > 5 &&
+         confirmPassword.length > 5
+      )
+         ? (isDisabled.current = true)
+         : (isDisabled.current = false);
+      return isDisabled;
    };
 
    const handleSubmit = async () => {
@@ -42,12 +57,21 @@ export default function SignupFormModal() {
    };
 
    return (
-      <>
+      <div className="form-box" data-testid="sign-up-form">
          <div className="headers">Sign up</div>
          <form onSubmit={getErrors} className="signup-form">
-            {errors.email && <p className="errors message">{errors.email}</p>}
+            {errors.email && (
+               <p className="errors message" data-testid="email-error-message">
+                  {errors.email}
+               </p>
+            )}
             {errors.username && (
-               <p className="errors message">{errors.username}</p>
+               <p
+                  className="errors message"
+                  data-testid="username-error-message"
+               >
+                  {errors.username}
+               </p>
             )}
             {errors.password && (
                <p className="errors message">{errors.password}</p>
@@ -56,6 +80,7 @@ export default function SignupFormModal() {
             <label>First Name</label>
             <input
                type="text"
+               data-testid="first-name-input"
                value={firstName}
                onChange={({ target: { value } }) => setFirstName(value)}
             />
@@ -63,6 +88,7 @@ export default function SignupFormModal() {
             <label>Last Name</label>
             <input
                type="text"
+               data-testid="last-name-input"
                value={lastName}
                onChange={({ target: { value } }) => setLastName(value)}
             />
@@ -70,6 +96,7 @@ export default function SignupFormModal() {
             <label>Email</label>
             <input
                type="text"
+               data-testid="email-input"
                value={email}
                onChange={({ target: { value } }) => setEmail(value)}
             />
@@ -77,6 +104,7 @@ export default function SignupFormModal() {
             <label>Username</label>
             <input
                type="text"
+               data-testid="username-input"
                value={username}
                onChange={({ target: { value } }) => setUsername(value)}
             />
@@ -84,6 +112,7 @@ export default function SignupFormModal() {
             <label>Password</label>
             <input
                type="password"
+               data-testid="password-input"
                value={password}
                onChange={({ target: { value } }) => setPassword(value)}
             />
@@ -91,27 +120,22 @@ export default function SignupFormModal() {
             <label>Confirm Password</label>
             <input
                type="password"
+               data-testid="confirm-password-input"
                value={confirmPassword}
                onChange={({ target: { value } }) => setConfirmPassword(value)}
             />
 
             <button
                type="submit"
-               className="signup-button"
-               disabled={
-                  !(
-                     firstName &&
-                     lastName &&
-                     email &&
-                     username.length > 3 &&
-                     password.length > 5 &&
-                     confirmPassword.length > 5
-                  )
-               }
+               data-testid="form-sign-up-button"
+               className={`signup-button ${
+                  isDisabled.current ? "" : "enabled"
+               }`}
+               disabled={updateStatus().current}
             >
                Sign Up
             </button>
          </form>
-      </>
+      </div>
    );
 }

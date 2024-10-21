@@ -16,11 +16,21 @@
 }
 
 .booking-button {
-   background-color: red;
+   background-color: #770000;
    color: white;
-   height: 1.5rem;
+   width: 100%;
+   padding: 0.7rem 4rem;
+   margin: 0px auto;
+   font-size: 1rem;
+   border-width: 1px;
 }
 
-.booking-button:hover {
+.booking-button.enabled {
+   box-shadow: black 3px 4px 4px;
+   background-color: red;
+}
+
+.booking-button.enabled:hover {
    cursor: pointer;
+   box-shadow: none;
 }

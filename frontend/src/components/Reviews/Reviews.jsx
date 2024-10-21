@@ -3,8 +3,10 @@ import { FaStar } from "react-icons/fa";
 import DeleteReviewModal from "../ReviewModal";
 import { CreateReviewModal } from "../ReviewModal/ReviewModal";
 import OpenModal from "../OpenModal";
-import { useState } from "react";
-import { createSelector } from "reselect";
+import { useEffect, useState } from "react";
+import { getCurrUser } from "./data";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllReviews } from "../../store/reviews";
 
 const MONTHS_OF_YEAR = [
    "Jan",
@@ -21,20 +23,26 @@ const MONTHS_OF_YEAR = [
    "Dec",
 ];
 
-export default function Reviews({ spot, reviews }) {
+export default function Reviews({ spot }) {
    const [modalFlag, setModalFlag] = useState(false);
-   const user = createSelector(
-      (state) => state.session,
-      (session) => session.user
-   );
-   console.log(user);
+   const dispatch = useDispatch();
+   const reviews = useSelector((state) => state.reviews);
+   const user = getCurrUser(useSelector((state) => state));
+
+   const reviewsArr = Object.values(reviews ? reviews : []);
    const toggle = () => {
       setModalFlag(!modalFlag);
    };
 
+   useEffect(() => {
+      if (spot) {
+         dispatch(getAllReviews(spot.id));
+      }
+   }, [dispatch, spot]);
+
    return (
       <>
-         {reviews.length > 0 ? (
+         {reviewsArr.length > 0 ? (
             <>
                <div>
                   <FaStar /> {spot.avgRating} •{" "}
@@ -44,7 +52,7 @@ export default function Reviews({ spot, reviews }) {
                      <span>{spot.numReviews} review</span>
                   )}
                </div>
-               {reviews.map((review) => {
+               {reviewsArr.map((review) => {
                   return (
                      <div key={`${review.id}`} className="review-box">
                         {review.User.firstName}
@@ -57,7 +65,7 @@ export default function Reviews({ spot, reviews }) {
                            , {new Date(review.createdAt).getFullYear()}
                         </div>
                         <p>{review.review}</p>
-                        {review.User.id === user.id ? (
+                        {review.User.id === user?.id ? (
                            <OpenModal
                               buttonText="Delete"
                               modalComponent={
@@ -78,7 +86,7 @@ export default function Reviews({ spot, reviews }) {
                   <FaStar />
                   <span>New</span>
                </div>
-               {user.id !== spot.Owner.id ? (
+               {user && user.id !== spot.Owner.id && !reviewsArr.length ? (
                   <>
                      <OpenModal
                         buttonText="Post Your Review"

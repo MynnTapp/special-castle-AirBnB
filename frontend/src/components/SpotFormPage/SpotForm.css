@@ -33,7 +33,7 @@ form {
    box-shadow: black 3px 4px 4px;
 }
 
-.error-message {
+.errors.message {
    color: red;
    font-size: 0.8rem;
 }

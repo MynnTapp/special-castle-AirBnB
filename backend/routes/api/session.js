@@ -16,6 +16,7 @@ const validateLogin = [
       .withMessage("Email or username is required"),
    check("password")
       .exists({ checkFalsy: true })
+      .notEmpty()
       .withMessage("Password is required"),
    handleValidationErrors,
 ];
@@ -23,7 +24,7 @@ const validateLogin = [
 // Log in  POST /api/session
 router.post("/", validateLogin, async (req, res, next) => {
    const { credential, password } = req.body;
-
+   console.log("credential ", credential, "password: ", password);
    const user = await User.unscoped().findOne({
       where: {
          [Op.or]: {
@@ -60,7 +61,7 @@ router.delete("/", (_req, res) => {
    return res.json({ message: "success" });
 });
 
-// Restore session user  URL: /api/session5
+// Restore session user  URL: /api/session
 router.get("/", (req, res) => {
    const { user } = req;
    if (!user) return res.json({ user: null });

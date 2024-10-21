@@ -141,15 +141,11 @@ module.exports = {
    /******************************************************************************/
    /***************************** ADD SPOT IMAGE VIA ID **************************/
    /******************************************************************************/
-   addSpotImage: async function (req, res) {
+   addSpotImage: async function (req, res, next) {
       const id = parseInt(req.params.spotId);
       const userId = req.user.id;
 
-      if (isNaN(id))
-         return res.status(404).json({
-            message:
-               "We're sorry, but the page you are looking for does not exist :(",
-         });
+      if (isNaN(id)) return next();
 
       const spot = await Spot.findByPk(id);
 
@@ -459,12 +455,14 @@ module.exports = {
          .notEmpty()
          .withMessage("Country is required"),
       check("lat")
-         .exists({ checkFalsy: true })
+         .exists({ checkFalsy: false })
          .isFloat({ min: -90, max: 90 })
+         .optional()
          .withMessage("Latitude must be within -90 and 90"),
       check("lng")
-         .exists({ checkFalsy: true })
+         .exists({ checkFalsy: false })
          .isFloat({ min: -180, max: 180 })
+         .optional()
          .withMessage("Longitude must be within -180 and 180"),
       check("name")
          .exists({ checkFalsy: true })

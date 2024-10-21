@@ -25,3 +25,17 @@ body {
    margin-bottom: 1rem;
    border-radius: 1px;
 }
+
+.login-button:disabled {
+   box-shadow: black 3px 3px 3px inset;
+   background-color: #770000;
+}
+
+.login-button.enabled {
+   box-shadow: black 3px 4px 4px;
+   cursor: pointer;
+}
+
+.login-button.enabled:hover {
+   box-shadow: none;
+}
