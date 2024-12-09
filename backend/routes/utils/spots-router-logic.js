@@ -15,188 +15,71 @@ module.exports = {
    /******************************** GET ALL THE SPOTS ***************************/
    /******************************************************************************/
    getAllSpots: async function (req, res) {
-      // let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
-      //    req.query;
-      // const where = {};
-      // where.lat = {};
-      // where.lat[Op.and] = [];
-      // where.lng = {};
-      // where.lng[Op.and] = [];
-      // where.price = {};
-      // where.price[Op.and] = [];
-
-      // minLat = parseFloat(minLat);
-      // if (!isNaN(minLat)) {
-      //    where.lat[Op.and].push({ lat: { [Op.gte]: minLat } });
-      // }
-
-      // maxLat = parseFloat(maxLat);
-      // if (!isNaN(maxLat)) {
-      //    where.lat[Op.and].push({ lat: { [Op.lte]: maxLat } });
-      // }
-
-      // minLng = parseFloat(minLng);
-      // if (!isNaN(minLng)) {
-      //    where.lng[Op.and].push({ lng: { [Op.gte]: minLng } });
-      // }
-
-      // maxLng = parseFloat(maxLng);
-      // if (!isNaN(maxLng)) {
-      //    where.lng[Op.and].push({ lng: { [Op.lte]: maxLng } });
-      // }
-
-      // minPrice = parseFloat(minPrice);
-      // if (!isNaN(minPrice)) {
-      //    where.price[Op.and].push({ price: { [Op.gte]: minPrice } });
-      // }
-
-      // maxPrice = parseFloat(maxPrice);
-      // if (!isNaN(maxPrice)) {
-      //    where.price[Op.and].push({ price: { [Op.lte]: maxPrice } });
-      // }
-
-      // size = parseInt(size);
-      // page = parseInt(page);
-
-      // if (isNaN(page) || page <= 0) page = 1;
-      // if (isNaN(size) || size <= 0 || size > 20) size = 20;
-
-      // const query = {
-      //    where,
-      //    include: [
-      //       {
-      //          model: SpotImage,
-      //          require: true,
-      //       },
-      //       {
-      //          model: User.scope("owner"),
-      //          as: "Owner",
-      //          require: true,
-      //       },
-      //    ],
-      //    limit: size,
-      //    offset: size * (page - 1),
-      // };
-      // const spots = await Spot.scope("user").findAll(query);
-
-      // return res.json({ Spots: spots, page, size });
-
-      let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-      page = page ? page : 1;
-      size = size ? size : 20;
-    
+      let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } =
+         req.query;
       const where = {};
-    
-      /*** search filters ***/
-      if (minLat != undefined || maxLat != undefined) {
-        const filter = [];
-    
-        // obligatory "sequelize sucks"
-        if (minLat != undefined) {
-          filter.push({ [Op.gte]: parseFloat(minLat) });
-        }
-    
-        if (maxLat != undefined) {
-          filter.push({ [Op.lte]: parseFloat(maxLat) });
-        }
-    
-        where.lat = { [Op.and]: filter };
-      }
-    
-      if (minLng != undefined || maxLng != undefined) {
-        const filter = [];
-    
-        if (minLng != undefined) {
-          filter.push({ [Op.gte]: parseFloat(minLng) });
-        }
-    
-        if (maxLng != undefined) {
-          filter.push({ [Op.lte]: parseFloat(maxLng) });
-        }
-    
-        where.lng = { [Op.and]: filter };
-      }
-    
-      if (minPrice != undefined || maxPrice != undefined) {
-        const filter = [];
-    
-        if (minPrice != undefined) {
-          filter.push({ [Op.gte]: parseFloat(minPrice) });
-        }
-    
-        if (maxPrice != undefined) {
-          filter.push({ [Op.lte]: parseFloat(maxPrice) });
-        }
-    
-        where.price = { [Op.and]: filter };
-      }
-      /*** end search filters ***/
-    
-      try {
-        const allSpots = await Spot.findAll({
-          offset: (page - 1) * size,
-          limit: size,
-          where,
-          attributes: [
-            "id",
-            "ownerId",
-            "address",
-            "city",
-            "state",
-            "country",
-            "lat",
-            "lng",
-            "name",
-            "description",
-            "price",
-            "createdAt",
-            "updatedAt",
-            [Sequelize.fn("AVG", Sequelize.col("Reviews.stars")), "avgRating"], // Calculate average rating
-          ],
-          include: [
-            {
-              model: SpotImage, // Include associated images
-              attributes: ["url"], // Get image URL
-              where: { preview: true },
-              required: false,
-              duplicating: false,
-            },
-            {
-              model: Review,
-              attributes: [],
-              required: false,
-              duplicating: false,
-            },
-          ],
-          group: ["Spot.id", "SpotImages.id"],
-        });
-    
-        const allSpotsArray = allSpots.map((spot) => {
-          return {
-            id: spot.id,
-            ownerId: spot.ownerId,
-            address: spot.address,
-            city: spot.city,
-            state: spot.state,
-            country: spot.country,
-            lat: parseFloat(spot.lat), // sometimes these two are strings. i don't know why,
-            lng: parseFloat(spot.lng), // but we'll parse them as floats to fix it.
-            name: spot.name,
-            description: spot.description,
-            price: parseFloat(spot.price), // probably worth doing it here too.
-            createdAt: spot.createdAt,
-            updatedAt: spot.updatedAt,
-            avgRating: spot.get("avgRating") ? parseFloat(spot.get("avgRating")).toFixed(1) : null,
-            previewImage: spot.SpotImages.length ? spot.SpotImages[0].url : null,
-          };
-        });
-    
-        return res.status(200).json({ page: page, size: size, Spots: allSpotsArray });
-      } catch (error) {
-        next(error);
+      where.lat = {};
+      where.lat[Op.and] = [];
+      where.lng = {};
+      where.lng[Op.and] = [];
+      where.price = {};
+      where.price[Op.and] = [];
+
+      minLat = parseFloat(minLat);
+      if (!isNaN(minLat)) {
+         where.lat[Op.and].push({ lat: { [Op.gte]: minLat } });
       }
 
+      maxLat = parseFloat(maxLat);
+      if (!isNaN(maxLat)) {
+         where.lat[Op.and].push({ lat: { [Op.lte]: maxLat } });
+      }
 
+      minLng = parseFloat(minLng);
+      if (!isNaN(minLng)) {
+         where.lng[Op.and].push({ lng: { [Op.gte]: minLng } });
+      }
+
+      maxLng = parseFloat(maxLng);
+      if (!isNaN(maxLng)) {
+         where.lng[Op.and].push({ lng: { [Op.lte]: maxLng } });
+      }
+
+      minPrice = parseFloat(minPrice);
+      if (!isNaN(minPrice)) {
+         where.price[Op.and].push({ price: { [Op.gte]: minPrice } });
+      }
+
+      maxPrice = parseFloat(maxPrice);
+      if (!isNaN(maxPrice)) {
+         where.price[Op.and].push({ price: { [Op.lte]: maxPrice } });
+      }
+
+      size = parseInt(size);
+      page = parseInt(page);
+
+      if (isNaN(page) || page <= 0) page = 1;
+      if (isNaN(size) || size <= 0 || size > 20) size = 20;
+
+      const query = {
+         where,
+         include: [
+            {
+               model: SpotImage,
+               require: true,
+            },
+            {
+               model: User.scope("owner"),
+               as: "Owner",
+               require: true,
+            },
+         ],
+         limit: size,
+         offset: size * (page - 1),
+      };
+      const spots = await Spot.scope("user").findAll(query);
+
+      return res.json({ Spots: spots, page, size });
    },
    /******************************************************************************/
    /**************************** GET SPOTS OWNED BY USER *************************/
