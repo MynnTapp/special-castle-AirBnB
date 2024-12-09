@@ -1,36 +1,36 @@
 .booking-block {
-   border: 2px solid gray;
-   border-radius: 1rem;
-   padding: 1.5rem;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-evenly;
-   margin: 2rem;
-   width: 65vw;
+  border: 2px solid rgb(219, 36, 116);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 2rem;
+  width: 65vw;
 }
 
 .price_reviews {
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .booking-button {
-   background-color: #770000;
-   color: white;
-   width: 100%;
-   padding: 0.7rem 4rem;
-   margin: 0px auto;
-   font-size: 1rem;
-   border-width: 1px;
+  background-color: #cb2c9b;
+  color: rgb(227, 30, 102);
+  width: 100%;
+  padding: 0.7rem 4rem;
+  margin: 0px auto;
+  font-size: 1rem;
+  border-width: 1px;
 }
 
 .booking-button.enabled {
-   box-shadow: black 3px 4px 4px;
-   background-color: red;
+  box-shadow: rgb(234, 24, 112) 3px 4px 4px;
+  background-color: rgb(190, 34, 97);
 }
 
 .booking-button.enabled:hover {
-   cursor: pointer;
-   box-shadow: none;
+  cursor: pointer;
+  box-shadow: none;
 }

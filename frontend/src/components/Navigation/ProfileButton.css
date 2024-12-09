@@ -1,38 +1,38 @@
 .hidden {
-   display: none;
+  display: none;
 }
 
 .profile-dropdown {
-   list-style-type: none;
-   position: absolute;
-   background-color: white;
-   padding: 1rem 0.7rem 1rem 0.7rem;
-   border-radius: 0.5rem;
-   width: fit-content;
-   height: 6.5em;
+  list-style-type: none;
+  position: absolute;
+  background-color: rgb(239, 33, 98);
+  padding: 1rem 0.7rem 1rem 0.7rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+  height: 6.5em;
 }
 
 .profile-button {
-   width: fit-content;
-   padding: 0.4rem 1.3rem;
-   background-color: #770000;
-   box-shadow: 4px 3px 3px inset;
-   border-width: 1px;
-   border-radius: 1rem;
-   font-size: 1rem;
+  width: fit-content;
+  padding: 0.4rem 1.3rem;
+  background-color: #fc4893;
+  box-shadow: 4px 3px 3px inset;
+  border-width: 1px;
+  border-radius: 1rem;
+  font-size: 1rem;
 }
 
 .profile-button:hover {
-   background-color: red;
-   cursor: pointer;
-   box-shadow: black 3px 4px 4px;
+  background-color: rgb(255, 0, 212);
+  cursor: pointer;
+  box-shadow: rgb(202, 61, 148) 3px 4px 4px;
 }
 
 .logout-button:hover {
-   cursor: pointer;
+  cursor: pointer;
 }
 
 .logout-button {
-   width: fit-content;
-   padding: 0.3rem 0.7rem;
+  width: fit-content;
+  padding: 0.3rem 0.7rem;
 }
