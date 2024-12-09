@@ -8,7 +8,7 @@
     "start": "per-env",
     "start:development": "nodemon ./bin/www",
     "start:production": "node ./bin/www",
-    "build": "npm install & node psql-setup-script.js",
+    "build": "npm install && node psql-setup-script.js",
     "db:build": "npx dotenv sequelize db:migrate && npx dotenv sequelize db:seed:all",
     "db:reset": "npx dotenv sequelize db:seed:undo:all && npx dotenv sequelize db:migrate:undo:all && npx dotenv sequelize db:migrate && npx dotenv sequelize db:seed:all"
   },
