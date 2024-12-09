@@ -16,7 +16,7 @@ export default function Navigation({ isLoaded }) {
           <img src="https://www.dbackdrop.com/cdn/shop/files/M5-151.jpg?v=1684748585" className="logo-image" />
         </NavLink>
       </li>
-      <li className="welcome">Welcome to Pink life of Airbnb's</li>
+      <li className="welcome">Welcome to Pink life of Airbnb</li>
       {isLoaded && (
         <>
           <span
