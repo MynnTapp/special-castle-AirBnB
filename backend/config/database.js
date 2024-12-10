@@ -1,5 +1,5 @@
 const config = require("./index");
-
+require('dotenv').config();
 module.exports = {
   development: {
     storage: config.dbFile,
@@ -23,3 +23,4 @@ module.exports = {
     },
   },
 };
+
