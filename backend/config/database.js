@@ -1,15 +1,15 @@
-const config = require("./index");
 require('dotenv').config();
+const {dbFile} = require('./index')
 module.exports = {
   development: {
-    storage: config.dbFile,
+    storage: dbFile,
     dialect: "sqlite",
     seederStorage: "sequelize",
     logQueryParameters: true,
     typeValidation: true,
   },
   production: {
-    use_env_variable: "DATABASE_URL",
+    use_env_variable: process.env.DATABASE_URL || null,
     dialect: "postgres",
     seederStorage: "sequelize",
     dialectOptions: {
@@ -19,8 +19,13 @@ module.exports = {
       },
     },
     define: {
-      schema: process.env.SCHEMA,
+      schema: "HauntedBnB",
     },
   },
 };
+
+
+
+
+
 

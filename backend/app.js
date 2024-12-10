@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 require("express-async-errors");
 const morgan = require("morgan");
@@ -5,10 +6,10 @@ const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
-const { environment } = require("./config");
+const { environment } = require("./config/index");
 const routes = require("./routes");
 const { ValidationError } = require("sequelize");
-require('dotenv').config();
+
 
 const isProduction = environment === "production";
 const app = express();
@@ -86,5 +87,11 @@ app.use((err, _req, res, _next) => {
       stack: isProduction ? undefined : err.stack,
    });
 });
+
+
+const db = require("./db/models/index");  // Update path to models folder
+console.log("DB Config:", db.sequelize.config);
+console.log("Environment:", environment);
+
 
 module.exports = app;
