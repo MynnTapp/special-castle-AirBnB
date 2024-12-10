@@ -89,12 +89,10 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
    async up(queryInterface, Sequelize) {
-      if (options.schema) {
-         await queryInterface.createSchema(options.schema); // Ensure schema exists
-      }
       await queryInterface.createTable(
          "Spots",
          {
+            
             id: {
                allowNull: false,
                autoIncrement: true,
@@ -158,12 +156,10 @@ module.exports = {
          },
          options
       );
+      console.log('Spots table created.');
    },
    async down(queryInterface, Sequelize) {
       options.tableName = "Spots";
-      await queryInterface.dropTable(options);
-      if (options.schema) {
-         await queryInterface.dropSchema(options.schema); // Drop schema if exists
-      }
+      return queryInterface.dropTable(options);
    },
 };
