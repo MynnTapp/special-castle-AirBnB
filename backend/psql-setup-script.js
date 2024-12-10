@@ -6,4 +6,3 @@ sequelize.showAllSchemas({ logging: false }).then(async (data) => {
     await sequelize.createSchema(process.env.SCHEMA);
   }
 });
-

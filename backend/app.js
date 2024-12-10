@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const csurf = require("csurf");
 const helmet = require("helmet");
+const csrfRouter = require("../backend/routes/index");
 const cookieParser = require("cookie-parser");
 const { environment } = require("./config");
 const routes = require("./routes");
@@ -17,7 +18,7 @@ const app = express();
 app.use(morgan("dev"));
 
 app.use(cookieParser());
-
+app.use("/api", csrfRouter);
 app.use(express.json());
 
 // Security Middleware
