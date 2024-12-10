@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 const { environment } = require("./config");
 const routes = require("./routes");
 const { ValidationError } = require("sequelize");
-require('dotenv').config();
+
 
 const isProduction = environment === "production";
 const app = express();
@@ -21,20 +21,14 @@ app.use(cookieParser());
 app.use("/api", csrfRouter);
 app.use(express.json());
 
-// Security Middleware
-// if (!isProduction) {
-//    // enable cors only in development
-//    app.use(cors());
-// }
+//Security Middleware
+if (!isProduction) {
+   // enable cors only in development
+   app.use(cors());
+}
 
 
-const corsOptions = {
-   origin: isProduction
-      ? "https://special-castle-airbnb.onrender.com/" // Replace with your deployed frontend URL
-      : "*", // Allow all origins in development
-   methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
-   credentials: true, // Allow cookies to be sent/received
-};
+
 
 app.use(cors(corsOptions));
 
