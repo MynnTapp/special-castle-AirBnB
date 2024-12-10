@@ -21,10 +21,22 @@ app.use(cookieParser());
 app.use(express.json());
 
 // Security Middleware
-if (!isProduction) {
-   // enable cors only in development
-   app.use(cors());
-}
+// if (!isProduction) {
+//    // enable cors only in development
+//    app.use(cors());
+// }
+
+
+const corsOptions = {
+   origin: isProduction
+      ? "https://special-castle-airbnb.onrender.com" // Replace with your deployed frontend URL
+      : "*", // Allow all origins in development
+   methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+   credentials: true, // Allow cookies to be sent/received
+};
+
+app.use(cors(corsOptions));
+
 
 // helmet helps set a variety of headers to better secure your app
 app.use(
