@@ -1,6 +1,6 @@
 # Ignoring this items
 node_modules/
 .env
-build
+# build
 .DS_Store
 *.db
