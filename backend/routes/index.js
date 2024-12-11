@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === "production") {
 
    router.get("/", (req, res) => {
       res.cookie("XSRF-Token", req.csrfToken());
-      return res.sendFile(
+      res.sendFile(
          path.resolve(__dirname, "../../frontend", "dist", "index.html")
       );
    });
@@ -23,11 +23,11 @@ if (process.env.NODE_ENV === "production") {
    // Serve the frontend's index.html file at all other routes NOT starting with /api
    router.get(/^(?!\/?api).*/, (req, res) => {
       res.cookie("XSRF-Token", req.csrfToken());
-      return res.sendFile(
+      res.sendFile(
          path.resolve(__dirname, "../../frontend", "dist", "index.html")
       );
    });
-} else {
+
    // Add a XSRF-Token cookie in development
    router.get("/api/csrf/restore", (req, res) => {
       const csrfToken = req.csrfToken();
