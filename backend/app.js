@@ -18,7 +18,7 @@ const app = express();
 app.use(morgan("dev"));
 
 app.use(cookieParser());
-app.use("/api", csrfRouter);
+//app.use("/api", csrfRouter);
 app.use(express.json());
 
 //Security Middleware
